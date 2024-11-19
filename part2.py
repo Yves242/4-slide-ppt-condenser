@@ -1,10 +1,18 @@
 import os
 from PIL import Image
 from reportlab.pdfgen import canvas
+import re
+
+def numeric_sort_key(filename):
+    # Extract the number from the filename, assuming the format "slide_<number>.png"
+    match = re.match(r"slide_(\d+)\.png", filename)
+    if match:
+        return int(match.group(1))  # Return the numeric part as an integer
+    return filename  # If no match, return the filename itself (fallback)
 
 def merge_images_to_pdf(input_dir, output_pdf):
-    # List all the PNG files in the directory, sorted in order (assuming slide_0.png, slide_1.png, etc.)
-    images = sorted([f for f in os.listdir(input_dir) if f.endswith('.png')])
+    # List all the PNG files in the directory, sorted by the numeric part of the filename
+    images = sorted([f for f in os.listdir(input_dir) if f.endswith('.png')], key=numeric_sort_key)
 
     # Check if there are any PNG images
     if not images:
@@ -14,7 +22,7 @@ def merge_images_to_pdf(input_dir, output_pdf):
     # Create a PDF canvas (initially with no size specified)
     c = canvas.Canvas(output_pdf)
 
-    # echo info
+    # Echo info
     print(f"Merging files...")
 
     for idx, image_file in enumerate(images):
@@ -38,7 +46,7 @@ def merge_images_to_pdf(input_dir, output_pdf):
     # Save the PDF file
     c.save()
 
-    print(f"PDF successfully merged as ' {output_pdf}'")
+    print(f"PDF successfully merged as '{output_pdf}'")
 
 # Example usage:
 merge_images_to_pdf('slides', 'merged_output.pdf')

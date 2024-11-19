@@ -2,9 +2,9 @@ import fitz  # PyMuPDF
 
 # Define the areas to crop: 4 quadrants (adjust the coordinates as needed)
 x0 = 20
-y0 = 115
+y0 = 110
 x1 = 270
-y1 = 280
+y1 = 290
 
 offset = 250
 boundary = 320
