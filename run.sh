@@ -17,3 +17,5 @@ python3 part1.py
 # STEP 3: Merge all into 1 pdf
 python3 part2.py
 
+# Rename for organization
+cp merged_output.pdf module_7_condensed.pdf
